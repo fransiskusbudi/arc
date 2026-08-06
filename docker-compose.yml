@@ -1,0 +1,26 @@
+services:
+  backend:
+    build: ./backend
+    env_file: .env
+    networks:
+      - default
+      - taliu_agent-network
+    ports:
+      - "127.0.0.1:8200:8000"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    depends_on:
+      - backend
+    ports:
+      - "127.0.0.1:8201:80"
+    restart: unless-stopped
+
+networks:
+  default:
+    driver: bridge
+  taliu_agent-network:
+    external: true

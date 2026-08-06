@@ -1,0 +1,71 @@
+@import "tailwindcss";
+@import "../tokens.css";
+
+/* `inline` — map existing custom properties from tokens.css into Tailwind's
+   theme by reference, instead of Tailwind re-declaring them on :root (which
+   would create a self-referencing var() and break the cascade). */
+@theme inline {
+  --color-paper:         var(--color-paper);
+  --color-paper-2:       var(--color-paper-2);
+  --color-paper-3:       var(--color-paper-3);
+  --color-ink:           var(--color-ink);
+  --color-ink-2:         var(--color-ink-2);
+  --color-rule:          var(--color-rule);
+  --color-rule-2:        var(--color-rule-2);
+  --color-accent:        var(--color-accent);
+  --color-accent-ink:    var(--color-accent-ink);
+  --color-focus:         var(--color-focus);
+
+  --color-status-lead:         var(--color-status-lead);
+  --color-status-applied:      var(--color-status-applied);
+  --color-status-interviewing: var(--color-status-interviewing);
+  --color-status-offer:        var(--color-status-offer);
+  --color-status-rejected:     var(--color-status-rejected);
+  --color-status-withdrawn:    var(--color-status-withdrawn);
+  --color-status-declined:     var(--color-status-declined);
+
+  --font-display: var(--font-display);
+  --font-sans:    var(--font-sans);
+  --font-mono:    var(--font-mono);
+
+  --text-display: var(--text-display);
+
+  --radius-card:  var(--radius-card);
+  --radius-input: var(--radius-input);
+  --radius-tag:   var(--radius-tag);
+}
+
+html {
+  overflow-x: clip;
+}
+
+body {
+  overflow-x: clip;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-variant-numeric: oldstyle-nums;
+}
+
+* {
+  border-color: var(--color-rule);
+}
+
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 150ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 150ms !important;
+  }
+}

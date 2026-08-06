@@ -1,0 +1,108 @@
+/* Hallmark · genre: editorial · macrostructure: Workbench (adapted, app-shell) · theme: Almanac
+ * nav: N3 Side-rail · footer: N/A (internal app) · enrichment: none (typography only)
+ * paper-band: light (dark variant: dark, same anchor) · display-style: roman-serif · accent-hue: cool (250)
+ */
+
+:root {
+  /* Colour — paper */
+  --color-paper:    oklch(97%   0.006 240);
+  --color-paper-2:  oklch(94.5% 0.008 240);
+  --color-paper-3:  oklch(92%   0.009 240);
+
+  /* Colour — ink */
+  --color-ink:      oklch(20%   0.012 240);
+  --color-ink-2:    oklch(46%   0.012 240);
+
+  /* Colour — rule */
+  --color-rule:     oklch(85%   0.008 240);
+  --color-rule-2:   oklch(78%   0.010 240);
+
+  /* Colour — accent (sparing: ≤3% of any viewport) */
+  --color-accent:      oklch(42% 0.11 250);
+  --color-accent-ink:  oklch(98% 0.01 250);
+  --color-focus:       oklch(55% 0.15 250);
+
+  /* Colour — status channel (functional, not the brand accent) */
+  --color-status-lead:          oklch(46% 0.012 240);
+  --color-status-applied:       oklch(48% 0.10  250);
+  --color-status-interviewing:  oklch(50% 0.11  80);
+  --color-status-offer:         oklch(45% 0.10  150);
+  --color-status-rejected:      oklch(50% 0.13  25);
+  --color-status-withdrawn:     oklch(50% 0.008 240);
+  --color-status-declined:      oklch(48% 0.10  40);
+  --color-error:   var(--color-status-rejected);
+  --color-success: var(--color-status-offer);
+
+  /* Fonts — 2+1 */
+  --font-display: "Newsreader", ui-serif, Georgia, serif;
+  --font-sans:    "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Spacing — 4pt scale (Tailwind's default spacing already matches; recorded here for portability) */
+  --space-3xs: 0.125rem;  --space-2xs: 0.25rem;  --space-xs: 0.5rem;
+  --space-sm:  0.75rem;   --space-md:  1rem;     --space-lg: 1.5rem;
+  --space-xl:  2.5rem;    --space-2xl: 4rem;     --space-3xl: 6rem;
+
+  /* Type scale — 1.25 (major third), 16px floor */
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-md:   1.25rem;
+  --text-lg:   1.5625rem;
+  --text-xl:   1.9531rem;
+  --text-2xl:  2.4414rem;
+  --text-display: clamp(1.75rem, 1.4rem + 1vw, 2.25rem);
+
+  /* Motion — Almanac multiplier 0.85× */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 100ms;
+  --dur-short: 190ms;
+  --dur-long:  360ms;
+
+  /* Radius — restrained, not pill-happy */
+  --radius-card:  0.5rem;
+  --radius-input: 0.375rem;
+  --radius-tag:   0.25rem;
+  --radius-pill:  999px;
+
+  /* Z-index — named scale */
+  --z-base:     1;
+  --z-raised:   10;
+  --z-dropdown: 100;
+  --z-sticky:   200;
+  --z-modal:    400;
+  --z-toast:    500;
+  --z-tooltip:  600;
+}
+
+/* Dark theme — same anchor hue (240/250), never inverted: elevation gets
+   lighter (not darker) per level, status/accent lightness raised to stay
+   legible on dark paper. Applied via [data-theme="dark"] on <html>, set by
+   the no-FOUC init script in index.html before first paint. */
+[data-theme='dark'] {
+  --color-paper:    oklch(15% 0.012 240);
+  --color-paper-2:  oklch(19% 0.013 240);
+  --color-paper-3:  oklch(23% 0.014 240);
+
+  --color-ink:      oklch(94% 0.006 240);
+  --color-ink-2:    oklch(68% 0.012 240);
+
+  --color-rule:     oklch(30% 0.012 240);
+  --color-rule-2:   oklch(38% 0.014 240);
+
+  --color-accent:      oklch(72% 0.11 250);
+  --color-accent-ink:  oklch(17% 0.02  250);
+  --color-focus:       oklch(76% 0.14 250);
+
+  --color-status-lead:          oklch(72% 0.012 240);
+  --color-status-applied:       oklch(74% 0.09  250);
+  --color-status-interviewing:  oklch(78% 0.10  80);
+  --color-status-offer:         oklch(76% 0.09  150);
+  --color-status-rejected:      oklch(78% 0.12  25);
+  --color-status-withdrawn:     oklch(68% 0.008 240);
+  --color-status-declined:      oklch(76% 0.09  40);
+
+  color-scheme: dark;
+}

@@ -1,0 +1,24 @@
+[
+  {
+    "date": "2026-08-07",
+    "scope": "app",
+    "macrostructure": "Workbench (adapted, app-shell)",
+    "theme": "Almanac (+ dark variant)",
+    "theme_axes": "paper-band: light + dark / display-style: roman-serif / accent-hue: cool (250)",
+    "enrichment": "none (typography only)",
+    "nav": "N3 Side-rail",
+    "footer": "N/A (internal app, no marketing footer)",
+    "brief": "Arc Pass B — cookie-session auth, dark/light theme toggle, quick status-change control, dashboard follow-up panel, kanban /pipeline (dnd-kit), mobile card-list pass. Diversification inverted (design.md-managed): every new surface shares the locked Almanac system, no new macrostructure/theme introduced."
+  },
+  {
+    "date": "2026-08-06",
+    "scope": "app",
+    "macrostructure": "Workbench (adapted, app-shell)",
+    "theme": "Almanac",
+    "theme_axes": "paper-band: light / display-style: roman-serif / accent-hue: cool (250)",
+    "enrichment": "none (typography only)",
+    "nav": "N3 Side-rail",
+    "footer": "N/A (internal app, no marketing footer)",
+    "brief": "JobPilot · job application tracker — redesign of frontend/src (login, dashboard, applications table + modal, detail page)"
+  }
+]
