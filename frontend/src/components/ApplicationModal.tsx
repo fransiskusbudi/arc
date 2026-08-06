@@ -93,7 +93,7 @@ export function ApplicationModal({ application, onClose, onSave }: Props) {
       className="m-auto max-h-[min(80vh,40rem)] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-[var(--radius-card)] border border-rule bg-paper p-0 backdrop:bg-ink/40"
     >
       <form onSubmit={handleSubmit} className="p-6">
-        <h2 className="mb-4 font-display text-xl font-medium tracking-[-0.01em] text-ink">
+        <h2 className="mb-4 font-display text-lg font-bold tracking-[-0.005em] text-ink uppercase">
           {application ? 'Edit application' : 'New application'}
         </h2>
 

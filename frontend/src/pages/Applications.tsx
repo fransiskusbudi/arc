@@ -55,9 +55,12 @@ export function Applications() {
   return (
     <Layout>
       <div className="mb-6 flex items-center justify-between gap-3">
-        <h1 className="font-display text-display font-medium tracking-[-0.01em] text-ink">
-          Applications
-        </h1>
+        <div>
+          <h1 className="font-display text-display font-bold tracking-[-0.005em] text-ink">
+            Applications
+          </h1>
+          <p className="mt-1 font-mono text-[0.6875rem] tracking-[0.08em] text-ink-2 uppercase">Timetable</p>
+        </div>
         <button
           onClick={() => setModalApplication('new')}
           className="h-9 shrink-0 rounded-[var(--radius-input)] bg-ink px-4 text-sm font-medium whitespace-nowrap text-paper transition-[background-color,transform] duration-[var(--dur-short)] ease-[var(--ease-out)] hover:bg-ink/90 active:translate-y-px"
@@ -103,7 +106,7 @@ export function Applications() {
                   to={`/applications/${application.id}`}
                   className="min-w-0 [overflow-wrap:anywhere]"
                 >
-                  <p className="font-display text-base font-medium text-ink">{application.company}</p>
+                  <p className="font-display text-base font-bold tracking-[-0.005em] text-ink uppercase">{application.company}</p>
                   <p className="text-sm text-ink-2">{application.role}</p>
                 </Link>
                 <StatusControl
@@ -112,9 +115,12 @@ export function Applications() {
                   className="shrink-0"
                 />
               </div>
-              <p className="mb-3 font-mono text-xs text-ink-2 [font-variant-numeric:tabular-nums]">
-                {application.source ?? '—'} · {application.date_applied ?? '—'}
-              </p>
+              <div className="mb-3 flex items-center gap-2">
+                <PlatformTag source={application.source} />
+                <span className="font-mono text-xs text-ink-2 [font-variant-numeric:tabular-nums]">
+                  {application.date_applied ?? '—'}
+                </span>
+              </div>
               <div className="flex items-center gap-4 border-t border-rule/60 pt-3">
                 <button
                   onClick={() => setModalApplication(application)}
@@ -179,7 +185,7 @@ export function Applications() {
                 <td className="px-4 py-3">
                   <Link
                     to={`/applications/${application.id}`}
-                    className="font-medium text-ink underline decoration-transparent decoration-1 underline-offset-2 transition-colors duration-[var(--dur-short)] ease-[var(--ease-out)] hover:decoration-rule-2"
+                    className="font-display font-bold tracking-[-0.005em] text-ink uppercase underline decoration-transparent decoration-1 underline-offset-2 transition-colors duration-[var(--dur-short)] ease-[var(--ease-out)] hover:decoration-rule-2"
                   >
                     {application.company}
                   </Link>
@@ -191,7 +197,9 @@ export function Applications() {
                     onChange={(status) => handleStatusChange(application.id, status)}
                   />
                 </td>
-                <td className="px-4 py-3 text-ink-2">{application.source ?? '—'}</td>
+                <td className="px-4 py-3">
+                  <PlatformTag source={application.source} />
+                </td>
                 <td className="px-4 py-3 font-mono text-ink-2 [font-variant-numeric:tabular-nums]">
                   {application.date_applied ?? '—'}
                 </td>
@@ -230,3 +238,13 @@ export function Applications() {
 
 const inputClass =
   'h-9 rounded-[var(--radius-input)] border border-rule-2 bg-paper px-3 text-sm text-ink outline outline-2 outline-transparent outline-offset-1 transition-colors duration-[var(--dur-short)] ease-[var(--ease-out)] placeholder:text-ink-2 hover:bg-paper-2 focus-visible:outline-focus'
+
+/** Source rendered like a platform indicator plate on a timetable. */
+function PlatformTag({ source }: { source: string | null }) {
+  if (!source) return <span className="text-ink-2">—</span>
+  return (
+    <span className="inline-flex items-center rounded-[var(--radius-tag)] border border-rule-2 px-1.5 py-0.5 font-mono text-[0.6875rem] tracking-[0.04em] text-ink-2 uppercase">
+      {source}
+    </span>
+  )
+}

@@ -73,7 +73,7 @@ export function ApplicationDetail() {
 
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="min-w-0 font-display text-display font-medium tracking-[-0.01em] text-ink [overflow-wrap:anywhere]">
+          <h1 className="min-w-0 font-display text-display font-bold tracking-[-0.005em] text-ink uppercase [overflow-wrap:anywhere]">
             {application.company}
           </h1>
           <p className="text-ink-2">{application.role}</p>
