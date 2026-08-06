@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { STATUSES } from '../api/types'
 import type { Status } from '../api/types'
-import { STATUS_DOT_STYLES, STATUS_STYLES } from './StatusBadge'
+import { STATUS_LABELS, STATUS_TEXT_STYLES, StatusLamp } from './StatusBadge'
 
 interface Props {
   status: Status
@@ -10,8 +10,9 @@ interface Props {
   className?: string
 }
 
-/** Interactive status pill — click/Enter opens a menu of all 7 statuses.
- * Optimistic: the caller applies the change immediately and reverts on error. */
+/** Interactive signal readout — click/Enter opens a menu of all 7 service
+ * states. Optimistic: the caller applies the change immediately and reverts
+ * on error. */
 export function StatusControl({ status, onChange, disabled, className }: Props) {
   const [open, setOpen] = useState(false)
   const [pending, setPending] = useState(false)
@@ -62,9 +63,10 @@ export function StatusControl({ status, onChange, disabled, className }: Props) 
           e.stopPropagation()
           setOpen((v) => !v)
         }}
-        className={`relative inline-flex items-center gap-1 rounded-[var(--radius-tag)] border px-2 py-0.5 font-mono text-[0.6875rem] font-medium tracking-[0.04em] uppercase transition-colors duration-[var(--dur-short)] ease-[var(--ease-out)] before:absolute before:-inset-[11px] before:content-[''] hover:bg-paper-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:cursor-not-allowed disabled:opacity-60 ${STATUS_STYLES[status]}`}
+        className={`relative inline-flex items-center gap-1.5 rounded-[var(--radius-tag)] border border-transparent px-1.5 py-0.5 font-mono text-[0.6875rem] font-medium tracking-[0.06em] uppercase transition-colors duration-[var(--dur-short)] ease-[var(--ease-out)] before:absolute before:-inset-[9px] before:content-[''] hover:border-rule focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:cursor-not-allowed disabled:opacity-60 ${STATUS_TEXT_STYLES[status]}`}
       >
-        {pending ? 'updating…' : status}
+        <StatusLamp status={status} />
+        {pending ? 'updating…' : STATUS_LABELS[status]}
         <ChevronIcon />
       </button>
 
@@ -74,7 +76,7 @@ export function StatusControl({ status, onChange, disabled, className }: Props) 
           role="menu"
           aria-label="Change status"
           onClick={(e) => e.stopPropagation()}
-          className="absolute top-full left-0 z-[var(--z-dropdown)] mt-1 min-w-[9.5rem] overflow-hidden rounded-[var(--radius-input)] border border-rule bg-paper py-1 shadow-[0_8px_24px_-8px_rgb(0_0_0_/_0.28)]"
+          className="absolute top-full left-0 z-[var(--z-dropdown)] mt-1 min-w-[10rem] overflow-hidden rounded-[var(--radius-input)] border border-rule bg-paper py-1"
         >
           {STATUSES.map((s) => (
             <button
@@ -83,12 +85,12 @@ export function StatusControl({ status, onChange, disabled, className }: Props) 
               role="menuitemradio"
               aria-checked={s === status}
               onClick={() => select(s)}
-              className={`flex w-full items-center gap-2 px-3 py-1.5 text-left font-mono text-[0.6875rem] font-medium tracking-[0.04em] uppercase transition-colors duration-[var(--dur-short)] ease-[var(--ease-out)] hover:bg-paper-2 ${
+              className={`flex w-full items-center gap-2 px-3 py-1.5 text-left font-mono text-[0.6875rem] font-medium tracking-[0.06em] uppercase transition-colors duration-[var(--dur-short)] ease-[var(--ease-out)] hover:bg-paper-2 ${
                 s === status ? 'text-ink' : 'text-ink-2'
               }`}
             >
-              <span className={`size-1.5 shrink-0 rounded-full ${STATUS_DOT_STYLES[s]}`} />
-              {s}
+              <StatusLamp status={s} />
+              {STATUS_LABELS[s]}
             </button>
           ))}
         </div>
