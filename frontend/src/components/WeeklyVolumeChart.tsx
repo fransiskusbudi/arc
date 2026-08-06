@@ -32,10 +32,10 @@ export function WeeklyVolumeChart({ data }: { data: TimelinePoint[] }) {
           />
           <Tooltip
             contentStyle={{
-              borderRadius: 6,
+              borderRadius: 2,
               borderColor: 'var(--color-rule)',
               fontSize: 13,
-              fontFamily: 'var(--font-sans)',
+              fontFamily: 'var(--font-mono)',
             }}
           />
           <Line

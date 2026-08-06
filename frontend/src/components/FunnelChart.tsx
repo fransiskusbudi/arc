@@ -27,10 +27,10 @@ export function FunnelChart({ data }: { data: FunnelStage[] }) {
           <Tooltip
             cursor={{ fill: 'var(--color-paper-2)' }}
             contentStyle={{
-              borderRadius: 6,
+              borderRadius: 2,
               borderColor: 'var(--color-rule)',
               fontSize: 13,
-              fontFamily: 'var(--font-sans)',
+              fontFamily: 'var(--font-mono)',
             }}
           />
           <Bar dataKey="count" fill="var(--color-accent)" radius={[2, 2, 0, 0]} />

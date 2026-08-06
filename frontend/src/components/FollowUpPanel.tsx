@@ -45,10 +45,13 @@ export function FollowUpPanel() {
   }
 
   return (
-    <div className="mb-6 rounded-[var(--radius-card)] border border-rule bg-paper p-5">
-      <h2 className="mb-4 font-mono text-[0.6875rem] font-medium tracking-[0.08em] text-ink-2 uppercase">
-        Follow-ups
-      </h2>
+    <div className="mb-6 border border-rule bg-paper p-5">
+      <div className="mb-4 flex items-baseline justify-between border-b border-rule pb-3">
+        <h2 className="font-mono text-[0.6875rem] font-medium tracking-[0.08em] text-ink uppercase">
+          Next departures
+        </h2>
+        <span className="font-mono text-[0.625rem] tracking-[0.06em] text-ink-2 uppercase">Follow-ups</span>
+      </div>
 
       {loading ? (
         <p className="text-sm text-ink-2">Loading…</p>
@@ -104,13 +107,16 @@ function FollowUpBucket({
           >
             <Link
               to={`/applications/${app.id}`}
-              className="absolute inset-0 rounded-[var(--radius-input)]"
+              className="absolute inset-0"
               aria-label={`${app.company} — ${app.role}`}
             />
             <div className="pointer-events-none relative flex items-center gap-3 px-2 py-2.5">
+              <span className="shrink-0 font-mono text-xs font-medium text-ink [font-variant-numeric:tabular-nums]">
+                {app.next_followup}
+              </span>
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm text-ink">
-                  <span className="font-medium">{app.company}</span>{' '}
+                  <span className="font-display font-bold tracking-[-0.005em] uppercase">{app.company}</span>{' '}
                   <span className="text-ink-2">· {app.role}</span>
                 </p>
                 {app.next_action && (
@@ -119,9 +125,6 @@ function FollowUpBucket({
                   </p>
                 )}
               </div>
-              <span className="shrink-0 font-mono text-xs text-ink-2 [font-variant-numeric:tabular-nums]">
-                {app.next_followup}
-              </span>
               <div className="pointer-events-auto relative z-10 shrink-0">
                 <StatusControl status={app.status} onChange={(status) => onStatusChange(app.id, status)} />
               </div>
