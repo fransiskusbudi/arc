@@ -27,13 +27,16 @@ import type { Application, Status } from '../api/types'
 
 type ColumnKey = 'lead' | 'applied' | 'interviewing' | 'offer' | 'done'
 
-const COLUMNS: { key: ColumnKey; label: string; statuses: Status[] }[] = [
-  { key: 'lead', label: 'Lead', statuses: ['lead'] },
-  { key: 'applied', label: 'Applied', statuses: ['applied'] },
-  { key: 'interviewing', label: 'Interviewing', statuses: ['interviewing'] },
-  { key: 'offer', label: 'Offer', statuses: ['offer'] },
-  { key: 'done', label: 'Done', statuses: ['rejected', 'withdrawn', 'declined'] },
+const COLUMNS: { key: ColumnKey; label: string; note: string; statuses: Status[] }[] = [
+  { key: 'lead', label: 'Lead', note: 'platform', statuses: ['lead'] },
+  { key: 'applied', label: 'Applied', note: 'departure', statuses: ['applied'] },
+  { key: 'interviewing', label: 'Interviewing', note: 'in transit', statuses: ['interviewing'] },
+  { key: 'offer', label: 'Offer', note: 'arrival', statuses: ['offer'] },
+  { key: 'done', label: 'Done', note: 'sideline', statuses: ['rejected', 'withdrawn', 'declined'] },
 ]
+
+const MAIN_LINE = COLUMNS.filter((c) => c.key !== 'done')
+const SIDELINE = COLUMNS.find((c) => c.key === 'done')!
 
 function columnForStatus(status: Status): ColumnKey {
   return COLUMNS.find((c) => c.statuses.includes(status))?.key ?? 'lead'
@@ -199,7 +202,10 @@ export function Pipeline() {
 
   return (
     <Layout>
-      <h1 className="mb-6 font-display text-display font-medium tracking-[-0.01em] text-ink">Pipeline</h1>
+      <h1 className="font-display text-display font-bold tracking-[-0.005em] text-ink">Pipeline</h1>
+      <p className="mt-1 mb-6 font-mono text-[0.6875rem] tracking-[0.08em] text-ink-2 uppercase">
+        The journey line — lead to offer
+      </p>
 
       {error && (
         <div
@@ -221,20 +227,34 @@ export function Pipeline() {
           onDragEnd={handleDragEnd}
           onDragCancel={() => setActiveId(null)}
         >
-          <div className="-mx-4 flex gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
-            {COLUMNS.map((column) => (
-              <KanbanColumn
-                key={column.key}
-                column={column}
-                applications={board[column.key].map((id) => byId[id]).filter(Boolean)}
-                dragEnabled={dragEnabled}
-                onStatusChange={handleStatusChange}
-              />
-            ))}
+          <div className="-mx-4 flex items-start gap-0 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
+            <div className="flex shrink-0 gap-4">
+              {MAIN_LINE.map((column) => (
+                <KanbanColumn
+                  key={column.key}
+                  column={column}
+                  applications={board[column.key].map((id) => byId[id]).filter(Boolean)}
+                  dragEnabled={dragEnabled}
+                  onStatusChange={handleStatusChange}
+                />
+              ))}
+            </div>
+
+            <div aria-hidden="true" className="mt-[13px] flex w-8 shrink-0 items-center">
+              <div className="h-px w-full border-t border-dashed border-rule-2" />
+            </div>
+
+            <KanbanColumn
+              column={SIDELINE}
+              applications={board.done.map((id) => byId[id]).filter(Boolean)}
+              dragEnabled={dragEnabled}
+              onStatusChange={handleStatusChange}
+              sideline
+            />
           </div>
           <DragOverlay>
             {activeId && byId[activeId] ? (
-              <div className="rounded-[var(--radius-card)] border border-rule bg-paper p-3 shadow-[0_12px_28px_-10px_rgb(0_0_0_/_0.35)]">
+              <div className="w-72 border border-ink bg-paper px-3 py-2.5">
                 <KanbanCardContent application={byId[activeId]} />
               </div>
             ) : null}
@@ -250,25 +270,37 @@ function KanbanColumn({
   applications,
   dragEnabled,
   onStatusChange,
+  sideline,
 }: {
   column: (typeof COLUMNS)[number]
   applications: Application[]
   dragEnabled: boolean
   onStatusChange: (id: number, status: Status) => Promise<void>
+  sideline?: boolean
 }) {
   const { setNodeRef } = useDroppable({ id: column.key })
 
   return (
     <div className="flex w-72 shrink-0 flex-col">
-      <div className="mb-3 flex items-center justify-between border-b border-rule pb-2">
-        <h2 className="font-mono text-[0.6875rem] font-medium tracking-[0.06em] text-ink-2 uppercase">
-          {column.label}
-        </h2>
-        <span className="font-mono text-xs text-ink-2 [font-variant-numeric:tabular-nums]">
-          {applications.length}
-        </span>
+      <div className="relative pb-2">
+        <div className={`h-px w-full ${sideline ? 'border-t border-dashed border-rule-2' : 'bg-rule-2'}`} />
+        <span
+          aria-hidden="true"
+          className={`absolute top-0 left-0 size-[9px] -translate-y-1/2 border-2 bg-paper ${sideline ? 'rounded-none border-rule-2' : 'rounded-full border-ink'}`}
+        />
+        <div className="mt-2.5 flex items-baseline justify-between">
+          <div className="min-w-0">
+            <h2 className="font-mono text-[0.6875rem] font-medium tracking-[0.08em] text-ink uppercase">
+              {column.label}
+            </h2>
+            <p className="font-mono text-[0.625rem] tracking-[0.04em] text-ink-2 lowercase">{column.note}</p>
+          </div>
+          <span className="shrink-0 font-mono text-xs text-ink-2 [font-variant-numeric:tabular-nums]">
+            {applications.length}
+          </span>
+        </div>
       </div>
-      <div ref={setNodeRef} className="flex min-h-24 flex-1 flex-col gap-2">
+      <div ref={setNodeRef} className="flex min-h-24 flex-1 flex-col">
         <SortableContext items={applications.map((a) => a.id)} strategy={verticalListSortingStrategy}>
           {applications.map((application) => (
             <KanbanCard
@@ -280,7 +312,7 @@ function KanbanColumn({
           ))}
         </SortableContext>
         {applications.length === 0 && (
-          <p className="rounded-[var(--radius-input)] border border-dashed border-rule-2 px-3 py-4 text-center text-xs text-ink-2">
+          <p className="mt-2 border border-dashed border-rule-2 px-3 py-4 text-center font-mono text-[0.6875rem] tracking-[0.04em] text-ink-2 uppercase">
             Empty
           </p>
         )}
@@ -308,7 +340,7 @@ function KanbanCard({
     <div
       ref={setNodeRef}
       style={style}
-      className={`rounded-[var(--radius-card)] border border-rule bg-paper p-3 transition-opacity duration-[var(--dur-short)] ease-[var(--ease-out)] ${isDragging ? 'opacity-40' : ''}`}
+      className={`border-b border-rule py-2.5 transition-opacity duration-[var(--dur-short)] ease-[var(--ease-out)] last:border-0 ${isDragging ? 'opacity-40' : ''}`}
     >
       <div className="flex items-start justify-between gap-2">
         <KanbanCardContent application={application} />
@@ -318,7 +350,7 @@ function KanbanCard({
             {...attributes}
             {...listeners}
             aria-label={`Drag ${application.company} — ${application.role}`}
-            className="shrink-0 touch-none rounded-[var(--radius-input)] p-1 text-ink-2 transition-colors duration-[var(--dur-short)] ease-[var(--ease-out)] hover:bg-paper-2 hover:text-ink active:cursor-grabbing focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+            className="shrink-0 touch-none p-1 text-ink-2 transition-colors duration-[var(--dur-short)] ease-[var(--ease-out)] hover:text-ink active:cursor-grabbing focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
           >
             <GripIcon />
           </button>
@@ -334,7 +366,7 @@ function KanbanCard({
 function KanbanCardContent({ application }: { application: Application }) {
   return (
     <div className="min-w-0">
-      <p className="truncate font-display text-sm font-medium tracking-[-0.005em] text-ink">
+      <p className="truncate font-display text-sm font-bold tracking-[-0.005em] text-ink uppercase">
         {application.company}
       </p>
       <p className="truncate text-xs text-ink-2">{application.role}</p>
