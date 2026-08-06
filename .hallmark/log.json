@@ -2,6 +2,18 @@
   {
     "date": "2026-08-07",
     "scope": "app",
+    "macrostructure": "Workbench (adapted, app-shell) + bespoke Journey Line (Pipeline)",
+    "theme": "custom",
+    "theme_axes": "paper-band: light + dark (warm anchor) / display-style: grotesque-sans / accent-hue: warm (30, vermillion signal)",
+    "vibe": "British Rail identity, SBB/CFF departure boards, Swiss transport wayfinding",
+    "enrichment": "none (typography + wayfinding structure only)",
+    "nav": "N3 Side-rail (re-skinned as station fascia)",
+    "footer": "N/A (internal app, no marketing footer)",
+    "brief": "Arc Pass B2 — full visual replacement: 'Railway' wayfinding concept. Pipeline rebuilt as a journey line (stations, not kanban columns), dashboard follow-up panel as a departures board, statuses re-cast as service states with signal lamps, applications as a timetable. Supersedes the Almanac system wholesale (Newsreader + JetBrains Mono retired in favour of Archivo + IBM Plex Mono)."
+  },
+  {
+    "date": "2026-08-07",
+    "scope": "app",
     "macrostructure": "Workbench (adapted, app-shell)",
     "theme": "Almanac (+ dark variant)",
     "theme_axes": "paper-band: light + dark / display-style: roman-serif / accent-hue: cool (250)",

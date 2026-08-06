@@ -4,87 +4,89 @@ A locked design system for this app. Every page redesign reads this file before
 emitting code. Do not regenerate per page — extend or amend this file when the
 system needs to grow.
 
-Produced by `hallmark redesign frontend/src` (multi-page flow — this is a functional
-app, not a marketing site, so the macrostructure catalogue is adapted rather than
-applied literally; see **Macrostructure family** below).
+Produced by `hallmark redesign frontend/src` — Pass B2, replacing the prior
+**Almanac** system wholesale with a bespoke **Railway** wayfinding system. This
+is a functional app, not a marketing site, so the macrostructure catalogue is
+adapted rather than applied literally; see **Macrostructure family** below.
 
 ## Inferred design context
 
-Print mode — the design-context gate could not be asked interactively. Inferred from the brief:
-
 - **Audience** — the user themself: a data/AI professional actively job hunting. Comfortable with dense data, keyboard-driven workflows, spreadsheets. No hand-holding needed.
 - **Use case** — track applications through a pipeline (lead → applied → interviewing → offer/rejected/withdrawn/declined), keep follow-ups from slipping, read conversion analytics by source. Single-user internal tool, not a multi-tenant product.
-- **Tone** — editorial, restrained. Explicit anti-slop brief: no dark purple gradients, no glassmorphism, no neon. Light paper, serif display with mono numerals, hairlines, one sparing accent.
+- **Tone** — austere, precise, quiet. Not editorial-literary (that was Almanac/Newsreader) — this is a wayfinding system: a printed timetable that happens to be software.
 
 ## Genre
-editorial
+editorial (austere/institutional register, not literary)
 
 ## Theme
-**Almanac** — light cool paper, mono labels, dense tabular layout, functional like a reference book. Matches the brief almost verbatim (light paper · serif + mono numerals · hairlines · one sparing accent).
+**Railway** (custom, bespoke) — the job search as a railway journey. Every surface maps onto the metaphor: Pipeline is a journey line with stations, the dashboard follow-up panel is a departures board, statuses are service states with signal lamps, applications are a timetable. Heritage references (DNA only, never cloned): British Rail corporate identity (Rail Alphabet, rail blue era), SBB/CFF departure boards, Swiss transport wayfinding.
 
-Axes: paper-band **light** · display-style **roman-serif** · accent-hue **cool** (blue, ~250°).
+Axes: paper-band **light** (dark variant: dark, same warm anchor) · display-style **grotesque-sans** (Archivo) · accent-hue **warm** (vermillion signal red, ~30°).
 
 ## Macrostructure family
 
-Arc has no marketing pages — it's the product itself. The 21 Hallmark macrostructures are landing-page shapes; applied here as an adapted *structural family* rather than literal picks:
+Arc has no marketing pages — it's the product itself. Applied here as an adapted *structural family*:
 
-- **Auth page (Login):** own minimal pattern — a single centred credential card, generous negative space, no marketing chrome. Closest in spirit to Letter's intimacy, without the salutation.
-- **App shell (Dashboard · Applications · Applications Detail):** **Workbench**-derived — the app's real data panels (stat strip, charts, tables) stand in for Workbench's "screenshots in frames." Hairline-bordered panels, functional density, minimal copy. Within the family: Dashboard leans on a numbered stat strip (T4 knob: 4-up) before its two chart panels; Applications and Detail lean on the **F3 Tabular spec sheet** archetype for their data rows (hairline rules between rows, tabular numerics).
+- **Auth page (Login):** the station entrance — wordmark set like a station sign (large Archivo, uppercase, letter-spaced), single credential card, one signal-coloured (accent) CTA.
+- **App shell (Dashboard · Applications · Applications Detail):** **Workbench**-derived, re-skinned as wayfinding surfaces. Dashboard = departures board (follow-ups) + station statistics (charts). Applications/Detail = timetable, hairline row rules, tabular mono numerals.
+- **Pipeline:** its own archetype — a **journey line**, not a kanban board. Horizontal track with station markers (LEAD/APPLIED/INTERVIEWING/OFFER), DONE as a dashed sideline branching off. Cards are flat, hairline-ruled rows, not floating card boxes.
 
 ## Navigation
-**N3 Side-rail** — the Almanac genre default for docs/reference-density products. Left rail: wordmark (mono, small caps), two nav destinations (Dashboard, Applications), user email + log out pinned to the rail foot. Text-only active indicator (a hairline left border in accent, not a filled bar) — keeps the accent sparing. Collapses to a top bar with the same items stacked at ≤ 60rem (see per-page responsive notes).
+**N3 Side-rail**, re-skinned as **station fascia**: wordmark set like a station sign, nav items in mono uppercase with a signal lamp marking the active station (not a filled bar, not a border-only indicator — a literal lamp, consistent with the status-lamp language used everywhere else). Collapses to a top bar with the same items stacked at ≤ 640px.
 
 ## Footer
-**N/A.** This is an internal app shell, not a marketing site — there is no sitemap, no newsletter, no closing statement to make. Forcing one of the eight footer archetypes here would be exactly the kind of genre-blind template Hallmark exists to avoid. Deliberate omission, not a miss.
+**N/A.** Internal app shell — no footer.
 
 ## Typography
-- Display: **Newsreader**, weight 500 (headings), roman only — optical-size serif, editorial without drama.
+- Display: **Archivo**, weight 500–700, roman only, uppercase for company names / wordmark / station labels, tight tracking. Strong grotesque for "station signs."
 - Body: **IBM Plex Sans**, weight 400 (body/UI), 500/600 for labels and buttons.
-- Mono (outlier): **JetBrains Mono** — stat figures, table numeric-ish columns, status tags, wordmark, dates. `font-variant-numeric: tabular-nums` wherever a number appears.
-- Display tracking: `-0.01em`. Mono labels: `0.08em` uppercase.
-- Type scale anchor: 1.25 (major third), 16px body floor.
+- Mono (timetables): **IBM Plex Mono** — stat figures, table numerals, status lamps' labels, dates, wordmark accents. `font-variant-numeric: tabular-nums` wherever a number appears.
+- Display tracking: `-0.005em` (tighter, grotesque). Mono labels: `0.06–0.1em` uppercase.
+- Type scale anchor: 1.25 (major third), 16px body floor. Unchanged from prior system.
+- **Newsreader and JetBrains Mono are retired.** Do not reintroduce — this is not the Vault/Almanac family.
 
 ## Spacing
-Tailwind's default 4px-base spacing scale is used directly (`p-4`, `gap-6`, …) — it already matches Hallmark's 4pt scale, so no parallel `--space-*` utility layer was introduced into JSX. The full named scale is still recorded in `tokens.css` for portability.
+Tailwind's default 4px-base spacing scale, unchanged.
 
 ## Colour
-OKLCH, cool anchor (hue ≈ 240–250). One sparing brand accent (ink-blue, hue 250) used only for: active nav indicator, links, focus rings, primary button fill/border. ≤ 3% of any viewport.
+OKLCH, warm anchor (paper/ink hue ≈ 50–75). One sparing signal accent — vermillion (~oklch 55% 0.19 30, hue 30) — used only for: active nav lamp, focus rings, links-on-hover, primary CTA on Login (the one "go" signal). ≤ 3% of any viewport.
 
-Status is a **separate, functional colour channel** — seven pipeline stages (lead/applied/interviewing/offer/rejected/withdrawn/declined) must stay scannable at a glance, which a single accent cannot carry. Status tags use muted, low-chroma inks as text + hairline outline (no saturated fills) — informational, not decorative. This is a deliberate, named exception to "one accent," not scope creep. See `tokens.css` for exact values.
+Status is a **separate, functional colour channel**, re-cast as **service states**: lead→scheduled (ink gray) · applied→on time (deep green) · interviewing→in transit (olive-gold) · offer→arrived (deep green-adjacent, diamond lamp — distinguished from "on time" by lamp shape, not colour alone) · rejected→cancelled (rust) · withdrawn→withdrawn (cool gray) · declined→diverted (cool gray, distinguished by label). Display labels for status live in `STATUS_LABELS` (`src/components/StatusBadge.tsx`); the underlying `Status` enum used for API calls is unchanged.
 
-### Dark theme
-Same anchor hue (240 paper/ink, 250 accent) — never inverted, never re-hued. Applied via `[data-theme="dark"]` on `<html>`, toggled from the side-rail/mobile header, default follows `prefers-color-scheme`, persisted to `localStorage` (`arc-theme`), applied by a no-FOUC inline script in `index.html` before first paint. Elevation gets *lighter* per level (paper 15% → paper-2 19% → paper-3 23%), not darker. Ink/accent/status lightness raised to stay legible on dark paper; accent chroma held (not the muted-down web-safe move) since it is checked at 7.97:1 against dark paper. All colour pairs verified ≥4.45:1 (light) / ≥6.83:1 (dark) — see token block in `tokens.css`.
+### Dark theme — "Night service"
+Same warm anchor hue, never inverted, never blue-black. Paper ~oklch(17% 0.02 50), not pure black. Elevation gets *lighter* per level. Accent and status lamps re-tuned brighter for AA on dark, described as "glowing softly." Applied via `[data-theme="dark"]`, toggled from the side-rail/mobile header, persisted to `localStorage` (`arc-theme`), applied by a no-FOUC inline script in `index.html` before first paint.
 
 ## Motion
-- Easings: `--ease-out` `cubic-bezier(0.16, 1, 0.3, 1)`, `--ease-in` `cubic-bezier(0.7, 0, 0.84, 0)`, `--ease-in-out` `cubic-bezier(0.65, 0, 0.35, 1)`.
-- Duration scale: **0.85×** (Almanac's multiplier — functional, like a reference book).
-- Reveal pattern: none on page load (app, not a marketing page — content is just there). Modal open/close and dropdown/menu use the standard recipes at 0.85× duration.
+- Easings unchanged: `--ease-out` `cubic-bezier(0.16, 1, 0.3, 1)`, `--ease-in` `cubic-bezier(0.7, 0, 0.84, 0)`, `--ease-in-out` `cubic-bezier(0.65, 0, 0.35, 1)`.
+- Duration scale tightened for the austere register: short 160ms (was 190ms), long 320ms (was 360ms).
+- Reveal pattern: none on page load. Modal open/close and dropdown/menu use the standard recipes.
 - Reduced-motion fallback: opacity-only, ≤ 150ms.
 
 ## Microinteractions stance
 - Silent success (save/delete just update the row — no toast).
-- Optimistic delete + Undo toast (5–10s), not a confirm dialog, for row deletes.
-- Hover delay 800ms · focus delay 0ms on any tooltip.
-- Full 8-state discipline on every input, select, textarea, and button (default · hover · focus · active · disabled · loading · error · success).
+- Optimistic update + revert-on-error (kept from prior pass), not a toast/undo pattern.
+- Full 8-state discipline on every input, select, textarea, and button.
 
 ## CTA voice
-- Primary: filled ink button (`bg-ink text-paper`), rectangular (small radius, not pill), one-line label, verb-first ("Save", "New application").
+- Primary (app-wide): filled ink button (`bg-ink text-paper`), rectangular (radius ≤4px), one-line label, verb-first.
+- Primary (Login only): filled **signal accent** button (`bg-accent text-accent-ink`) — the one deliberate accent CTA, framed as "the signal to go."
 - Secondary: hairline-outlined button, transparent fill.
-- Destructive: hairline-outlined, status-rejected ink text — no filled red button.
+- Destructive: hairline-outlined, status-rejected (cancelled/rust) ink text — no filled red button.
 
 ## Per-page allowances
-- App pages (Dashboard/Applications/Detail/Login) MUST NOT use hero enrichment — function carries the page, per the app-pages rule in the multi-page flow.
-- No eyebrows / numbered section labels anywhere — nothing here is genuinely ordinal.
+- App pages MUST NOT use hero enrichment — function carries the page.
+- No eyebrows / numbered section labels anywhere, except the station "platform / departure / in transit / arrival / sideline" sub-labels on Pipeline, which are genuinely part of the wayfinding structure, not decorative kickers.
 
 ## What pages MUST share
-- Wordmark (JetBrains Mono, small caps, "ARC").
-- The accent colour and its ≤3% placement.
-- Newsreader + IBM Plex Sans + JetBrains Mono.
-- CTA voice (rectangular, small radius, hairline or filled-ink).
-- N3 side-rail nav shell (Login is the one exception — no shell, pre-auth).
+- Wordmark (Archivo, bold, uppercase, "ARC" set like a station sign).
+- The vermillion signal accent and its ≤3% placement.
+- Archivo + IBM Plex Sans + IBM Plex Mono.
+- CTA voice.
+- N3 side-rail / station-fascia nav shell (Login is the one exception — no shell, pre-auth).
+- Zero box-shadows, zero gradients, zero blur, radius ≤4px (lamps round/diamond only).
 
 ## What pages MAY differ on
-- Panel composition within the Workbench family (stat strip vs. tabular spec sheet).
+- Panel composition within the Workbench family (stat strip vs. tabular spec sheet vs. journey line).
 - Chart vs. table content.
 
 ## Exports
