@@ -32,10 +32,14 @@ export function Login() {
   return (
     <div className="flex min-h-dvh items-center justify-center bg-paper px-4 py-12">
       <div className="w-full max-w-sm">
-        <div className="mb-8 text-center">
-          <span className="font-mono text-xs font-medium tracking-[0.14em] text-ink-2 uppercase">
+        <div className="mb-10 text-center">
+          <span className="font-display text-3xl font-bold tracking-[0.08em] text-ink uppercase">
             Arc
           </span>
+          <div className="mx-auto mt-3 h-px w-12 bg-rule-2" />
+          <p className="mt-3 font-mono text-[0.6875rem] tracking-[0.1em] text-ink-2 uppercase">
+            Station entrance
+          </p>
         </div>
 
         <form
@@ -43,7 +47,7 @@ export function Login() {
           noValidate
           className="rounded-[var(--radius-card)] border border-rule bg-paper px-7 py-8"
         >
-          <h1 className="mb-1 font-display text-2xl font-medium tracking-[-0.01em] text-ink">
+          <h1 className="mb-1 font-display text-xl font-bold tracking-[-0.005em] text-ink">
             Sign in
           </h1>
           <p className="mb-6 text-sm text-ink-2">Track your job search, one application at a time.</p>
@@ -92,7 +96,7 @@ export function Login() {
           <button
             type="submit"
             disabled={submitting}
-            className="h-9 w-full rounded-[var(--radius-input)] bg-ink text-sm font-medium text-paper transition-[background-color,transform] duration-[var(--dur-short)] ease-[var(--ease-out)] hover:bg-ink/90 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50"
+            className="h-9 w-full rounded-[var(--radius-input)] bg-accent text-sm font-medium tracking-[0.02em] text-accent-ink uppercase transition-[background-color,transform] duration-[var(--dur-short)] ease-[var(--ease-out)] hover:bg-accent/90 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50"
           >
             {submitting ? 'Signing in…' : 'Sign in'}
           </button>

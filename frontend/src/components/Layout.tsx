@@ -3,63 +3,87 @@ import { NavLink } from 'react-router-dom'
 import { useAuth } from '../auth/AuthContext'
 import { getTheme, setTheme, type Theme } from '../theme'
 
-const navLinkClass = ({ isActive }: { isActive: boolean }) =>
-  `border-l-2 px-4 py-2 text-sm transition-colors duration-[var(--dur-short)] ease-[var(--ease-out)] sm:border-l-2 sm:px-3 ${
+const STATIONS = [
+  { to: '/', end: true, label: 'Dashboard' },
+  { to: '/applications', end: false, label: 'Applications' },
+  { to: '/pipeline', end: false, label: 'Pipeline' },
+]
+
+function navLinkClass({ isActive }: { isActive: boolean }) {
+  return `group flex items-center gap-2 border-l-2 px-4 py-2.5 font-mono text-xs font-medium tracking-[0.08em] uppercase transition-colors duration-[var(--dur-short)] ease-[var(--ease-out)] sm:px-4 ${
     isActive
-      ? 'border-accent font-medium text-ink'
+      ? 'border-accent text-ink'
       : 'border-transparent text-ink-2 hover:border-rule-2 hover:text-ink'
   }`
+}
+
+/** Compact variant for the mobile header fascia — three destinations have to
+ * fit next to the wordmark and theme toggle in ~390px, so the active marker
+ * is a bottom rule instead of the side-rail's lamp. */
+function mobileNavLinkClass({ isActive }: { isActive: boolean }) {
+  return `border-b-2 px-1.5 py-1 font-mono text-[0.625rem] font-medium tracking-[0.03em] uppercase transition-colors duration-[var(--dur-short)] ease-[var(--ease-out)] ${
+    isActive ? 'border-accent text-ink' : 'border-transparent text-ink-2'
+  }`
+}
+
+function NavLamp({ isActive }: { isActive: boolean }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`size-[7px] shrink-0 rounded-full transition-colors duration-[var(--dur-short)] ease-[var(--ease-out)] ${
+        isActive ? 'bg-accent' : 'bg-rule-2 group-hover:bg-ink-2'
+      }`}
+    />
+  )
+}
 
 export function Layout({ children }: { children: ReactNode }) {
   const { user, logout } = useAuth()
 
   return (
     <div className="min-h-dvh bg-paper text-ink sm:flex">
-      <header className="sticky top-0 z-20 flex items-center justify-between border-b border-rule bg-paper-2 px-4 py-3 sm:hidden">
-        <span className="font-mono text-xs font-medium tracking-[0.14em] text-ink uppercase">
+      <header className="sticky top-0 z-20 flex items-center justify-between gap-2 border-b border-rule bg-paper-2 px-3 py-3 sm:hidden">
+        <span className="shrink-0 font-display text-sm font-bold tracking-[0.06em] text-ink uppercase">
           Arc
         </span>
-        <div className="flex items-center gap-1">
-          <nav className="flex gap-1">
-            <NavLink to="/" end className={navLinkClass}>
-              Dashboard
-            </NavLink>
-            <NavLink to="/applications" className={navLinkClass}>
-              Applications
-            </NavLink>
-            <NavLink to="/pipeline" className={navLinkClass}>
-              Pipeline
-            </NavLink>
+        <div className="flex min-w-0 items-center gap-1">
+          <nav className="flex min-w-0 gap-1">
+            {STATIONS.map((s) => (
+              <NavLink key={s.to} to={s.to} end={s.end} className={mobileNavLinkClass}>
+                {s.label}
+              </NavLink>
+            ))}
           </nav>
           <ThemeToggle />
         </div>
       </header>
 
-      <aside className="hidden sm:sticky sm:top-0 sm:flex sm:h-dvh sm:w-48 sm:shrink-0 sm:flex-col sm:border-r sm:border-rule sm:bg-paper-2">
-        <div className="flex items-center justify-between px-5 pt-6 pb-5">
-          <span className="font-mono text-xs font-medium tracking-[0.14em] text-ink uppercase">
+      <aside className="hidden sm:sticky sm:top-0 sm:flex sm:h-dvh sm:w-52 sm:shrink-0 sm:flex-col sm:border-r sm:border-rule sm:bg-paper-2">
+        <div className="flex items-center justify-between border-b border-rule px-5 pt-6 pb-5">
+          <span className="font-display text-lg font-bold tracking-[0.04em] text-ink uppercase">
             Arc
           </span>
           <ThemeToggle />
         </div>
 
-        <nav className="flex flex-1 flex-col gap-0.5 px-0">
-          <NavLink to="/" end className={navLinkClass}>
-            Dashboard
-          </NavLink>
-          <NavLink to="/applications" className={navLinkClass}>
-            Applications
-          </NavLink>
-          <NavLink to="/pipeline" className={navLinkClass}>
-            Pipeline
-          </NavLink>
+        <nav className="flex flex-1 flex-col gap-0.5 px-0 pt-4">
+          {STATIONS.map((s) => (
+            <NavLink key={s.to} to={s.to} end={s.end} className={navLinkClass}>
+              {({ isActive }) => (
+                <>
+                  <NavLamp isActive={isActive} />
+                  {s.label}
+                </>
+              )}
+            </NavLink>
+          ))}
         </nav>
 
         <div className="border-t border-rule px-5 py-4">
-          <p className="truncate font-mono text-xs text-ink-2">{user?.email}</p>
+          <p className="truncate font-mono text-[0.6875rem] text-ink-2">{user?.email}</p>
           <button
             onClick={logout}
-            className="mt-2 rounded-[var(--radius-input)] text-sm text-ink-2 underline decoration-rule-2 decoration-1 underline-offset-2 transition-colors duration-[var(--dur-short)] ease-[var(--ease-out)] hover:text-ink hover:decoration-ink-2 focus-visible:decoration-ink-2 disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-2 font-mono text-xs tracking-[0.04em] text-ink-2 uppercase underline decoration-rule-2 decoration-1 underline-offset-2 transition-colors duration-[var(--dur-short)] ease-[var(--ease-out)] hover:text-ink hover:decoration-ink-2 focus-visible:decoration-ink-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
             Log out
           </button>
